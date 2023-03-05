@@ -1,13 +1,3 @@
-// (() => {
-    
-//     buttons = document.querySelectorAll('button.artdeco-button span.artdeco-button__text');
-//     buttons.forEach(button => {
-//         if(button.outerText.trim() == 'Connect'){
-//             console.log(button.outerText)
-//         }
-//     });
-// })();
-
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     const observer = new MutationObserver((mutationsList) => {
         let oneTime = false;
@@ -23,8 +13,13 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
     function clickSendButton() {
         const sendButton = document.querySelector('.artdeco-modal__actionbar .artdeco-button--primary');
+        const name = document.querySelector('span.flex-1');
+        const name2 = name.querySelector('strong').textContent;
+        // print the Name
+        console.log("Name: ", name2);
         if (sendButton) {
             sendButton.click();
+            //clicks successfully but messesup when searchign the next 'Connect' button
         }
     }
 
@@ -32,18 +27,30 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         console.log("start")
         const connectButtons = document.querySelectorAll('button.artdeco-button span.artdeco-button__text');
         let observerCreated = false;
-        connectButtons.forEach(button => {
-            if(button.outerText.trim() == 'Follow'){
-                console.log(button)
-                console.log(button.outerText)
-                console.log("Got in, fuck the warning")
-                //works
-                button.click();
-                // if(!observerCreated){
-                //     observer.observe(document.body, { attributes: true, childList: true, subtree: true });
-                //     observerCreated = true;
-                // }
-            }
-        });
+        let timeDelay = 5000;
+
+        // runs on a infinite for loop in the ClickButton function()
+        // There is a thrid type of pop-up that asks, where did u meet this person, code has no way to deal with that
+
+        function clickButton(){
+            connectButtons.forEach(button => {
+                observerCreated = false;
+                if(button.outerText.trim() == 'Connect'){
+                    
+                    button.click();
+                    if(!observerCreated){
+                        observer.observe(document.body, { attributes: true, childList: true, subtree: true });
+                        observerCreated = true;
+                    }
+                    setTimeout(clickButton, timeDelay);
+                }
+            });
+        }
+        clickButton();
     }
 })
+
+
+// setTimeout(() => {
+//     //the statement
+// }, 3000);

@@ -1,0 +1,38 @@
+{
+    "name": "LinkedInConnector",
+    "version": "0.0.1",
+    "description": "Send connection request to all in the page",
+    "permissions": ["activeTab", "tabs"],
+    "host_permissions": ["https://www.linkedin.com/search/results/people/*"],
+    "background": {
+      "service_worker": "background.js"
+    },
+    "content_scripts": [
+      {
+        "matches": ["https://www.linkedin.com/search/results/people/*"],
+        "js": ["contentScript.js"]
+      }
+    ],
+    "web_accessible_resources": [
+      {
+        "resources": [
+          "assets/bookmark.png",
+          "assets/play.png",
+          "assets/delete.png",
+          "assets/save.png",
+          "assets/global-network.png"
+        ],
+        "matches": ["https://www.linkedin.com/*"]
+      }
+    ],
+    "action": {
+      "default_icon": {
+        "16": "assets/global-network.png",
+        "24": "assets/global-network.png",
+        "32": "assets/global-network.png"
+      },
+      "default_title": "LinkedInConnector",
+      "default_popup": "popup.html"
+    },
+    "manifest_version": 3
+}

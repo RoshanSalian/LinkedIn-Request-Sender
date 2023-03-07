@@ -2,10 +2,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     const observer = new MutationObserver((mutationsList) => {
         let oneTime = false;
         for(const mutation of mutationsList){
-            // data-test-modal is a div that covers the entire div in the 'Add a note'  div
-            // need to add one more div with the 'where u know' modal, has the same data-test-modal
+            // detects the presence of both types of modals - "add note" and "how you know the person"
             if (oneTime == false && mutation.target.getAttribute('data-test-modal')===''){
                 console.log("About to click Send button");
+                // Send for further processing after modal detected
                 clickSendButton();
                 oneTime = true;
                 observer.disconnect();
@@ -14,12 +14,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     });
 
     function addNoteModal(){
-        console.log("In the note function, Regular");
-
-        //this is only to display the name
-        const name = document.querySelector('span.flex-1');
-        const name2 = name.querySelector('strong').textContent;
-        console.log("Name: ", name2);
+        // this is only to display the name
+        // const name = document.querySelector('span.flex-1');
+        // const name2 = name.querySelector('strong').textContent;
+        // console.log("Name: ", name2);
 
         const sendButton = document.querySelector('.artdeco-modal__actionbar .artdeco-button--primary');
 
@@ -31,24 +29,14 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     function clickSendButton() {
         const addANote = document.querySelector('button[aria-label="Add a note"]');
 
-        
-
-        //Collecting the tag for 'How u know?' modal
-        // write logic to check in below button is null or not null and based on that make logic 
+        // required for logic to detect which type of modal pops-up on clicking the 'Connect' button
         const workColeagues = document.querySelector('button[aria-label="Work Colleagues"]');
-
-        // if(addANote){
-        //     addNoteModal();
-        // }
         
         if(workColeagues){
-            console.log("In the 'How u know' section, hard One");
-
-            // add the same school button
+            // To add UI drop-down selection option here.
             const workEvent = document.querySelector('button[aria-label="Met at a work-related event"]');
 
             const howYouKnow = document.querySelector('button[aria-label="Connect"]');
-
 
             let firstClick = false;
 
@@ -72,10 +60,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
             firstClickHandler();
             secondClickHandler();
-            // Need to handle the Send note section again here. 
-            // Work coleague selection is successful here
         }
 
+        // The add note section is visible always on clicking 'Connect', might not show for everyone Abhishek
         addNoteModal();
 
     }
@@ -85,9 +72,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         const connectButtons = document.querySelectorAll('button.artdeco-button span.artdeco-button__text');
         let observerCreated = false;
         let timeDelay = 5000;
-
-        // runs on a infinite for loop in the ClickButton function()
-        // There is a thrid type of pop-up that asks, where did u meet this person, code has no way to deal with that
 
         function clickButton(){
             connectButtons.forEach(button => {
@@ -107,7 +91,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     }
 })
 
-
-// setTimeout(() => {
-//     //the statement
-// }, 3000);
+// To do
+// Better function names.
+// Add a UI logic and connect to backend
+// Write a blog

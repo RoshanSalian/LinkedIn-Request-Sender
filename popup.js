@@ -1,12 +1,9 @@
 // adding a new bookmark row to the popup
-const addNewBookmark = () => {};
+const startButton = document.getElementById('start-button');
 
-const viewBookmarks = () => {};
+startButton.addEventListener("click", ()=>{
+    console.log("Popup clicked");
+    chrome.runtime.sendMessage({message: "startFromPopup"});
+})
 
-const onPlay = e => {};
-
-const onDelete = e => {};
-
-const setBookmarkAttributes =  () => {};
-
-document.addEventListener("DOMContentLoaded", () => {});
+console.log("Before")

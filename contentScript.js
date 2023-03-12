@@ -1,4 +1,7 @@
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    console.log("Content script loaded successfully.");
+    console.log("Message: ", message)
+
     const observer = new MutationObserver((mutationsList) => {
         let oneTime = false;
         for(const mutation of mutationsList){
@@ -17,11 +20,12 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         // this is only to display the name
         // const name = document.querySelector('span.flex-1');
         // const name2 = name.querySelector('strong').textContent;
-        // console.log("Name: ", name2);
+        // console.log("Name: ", name2)
 
         const sendButton = document.querySelector('.artdeco-modal__actionbar .artdeco-button--primary');
 
         if (sendButton) {
+            // commenting for testing
             sendButton.click();
         }
     }
@@ -67,7 +71,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
     }
 
-    if(message.type == 'start'){
+    // if(message.type == 'start'){
+    if(message.action == 'start'){
         console.log("start")
         const connectButtons = document.querySelectorAll('button.artdeco-button span.artdeco-button__text');
         let observerCreated = false;

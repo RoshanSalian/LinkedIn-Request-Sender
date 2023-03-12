@@ -1,14 +1,27 @@
-chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-  // if(changeInfo.status == 'complete' && tab.url && tab.url.includes("linkedin.com/search/results/people/")){
-  //   // chrome.scripting.executeScript(tabId, {file: 'content.js'});
-  //   chrome.scripting.executeScript({
-  //     target: {tabId: tabId},
-  //     files: ['contentScript.js']
-  //   }, ()=>{
-  //     console.log('Script Executed');
-  //   });
-  // }
-  chrome.tabs.sendMessage(tabId, {type: 'start'});
-})
+// chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+//   chrome.tabs.sendMessage(tabId, {type: 'start'});
+// })
 
+
+// Reading for message from popup.js
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+
+  if (request.message === "startFromPopup") {
+    //control reaches here.
+
+    const currentTab = chrome.tabs.query({currentWindow: true, active: true}, function(){});
+    console.log(currentTab);
   
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
+      console.log(tabs)
+      let tabId = tabs[0].id;
+      chrome.tabs.sendMessage(tabs[0].id, {action: "start"});  
+    });
+
+    // chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+    //   chrome.tabs.sendMessage(activeTab, { message: "start" });
+    // });
+  }
+});
+
+

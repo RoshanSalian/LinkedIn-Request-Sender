@@ -3,11 +3,36 @@
 
 <div class="container">
   <div>
-    <div class="title">Start sending connections</div>
+    <div class="title">Automated Requests</div>
 
-    <button id="start-button" class="btn btn-primary">Start</button>
+    <div class="send_note_container">
+      <p>Add a note in the connection request</p>
+      <textarea type="text" id="send_note" class="send_note" placeholder="Hi ${name}, I'm interested in connecting with you to learn more about employment opportunities in Software Engineer role. I believe my skills and experience could be valuable for developer role in your esteemed organisation. Looking forward to connecting with you."></textarea>
+    </div>
+    
+    <div class="howDoYouKnow">
+      <p>How do you know the person?</p>
+      <select id="howKnowSelect">
+        <option value="workColleague">Work Colleagues</option>
+        <option value="classmaste">Classmates</option>
+        <option value="metAtWork">Met at work-related event</option>
+        <!-- <option value="dontKnow">We don't know each other</option> -->
+      </select>
+    </div>
 
-    <div class="bookmarks" id="bookmarks"></div>
+    <div class="buttonSection">
+      <button id="start-button" class="btn btn-primary">Start</button>
+    </div>
 </div>
 
 <script type="module" src="popup.js"></script>
+
+
+<!-- Options for 'How do u know?'
+Work Colleagues
+Classmates
+Met at work-related event
+Other
+We don't know each other -->
+
+<!-- Add a pop for the note section for 'Send note' -->

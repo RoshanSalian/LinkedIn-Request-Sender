@@ -2,7 +2,6 @@
 //   chrome.tabs.sendMessage(tabId, {type: 'start'});
 // })
 
-
 // Reading for message from popup.js
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
@@ -17,10 +16,6 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       let tabId = tabs[0].id;
       chrome.tabs.sendMessage(tabs[0].id, {action: "start"});  
     });
-
-    // chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
-    //   chrome.tabs.sendMessage(activeTab, { message: "start" });
-    // });
   }
 });
 

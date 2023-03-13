@@ -76,7 +76,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         console.log("start")
         const connectButtons = document.querySelectorAll('button.artdeco-button span.artdeco-button__text');
         let observerCreated = false;
-        let timeDelay = 5000;
+        let timeDelay = 10000;
 
         function clickButton(){
             connectButtons.forEach(button => {

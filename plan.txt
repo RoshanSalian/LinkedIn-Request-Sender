@@ -1,40 +1,4 @@
-// Find all buttons on the page with a span child element containing "JOIN" or "REJOIN"
-const buttons = document.querySelectorAll('button > span:contains("JOIN"), button > span:contains("REJOIN")');
-
-// Loop through each button
-for (let i = 0; i < buttons.length; i++) {
-  const button = buttons[i].parentNode; // get the parent button element
-
-  // Check if the child span element contains the text "JOIN" or "REJOIN"
-  if (buttons[i].textContent === 'JOIN') {
-    // Add an event listener to the button
-    button.addEventListener('click', function() {
-      // Trigger an action when the button is clicked
-      console.log('JOIN button clicked!');
-    });
-  } else if (buttons[i].textContent === 'REJOIN') {
-    // Add an event listener to the button
-    button.addEventListener('click', function() {
-      // Trigger an action when the button is clicked
-      console.log('REJOIN button clicked!');
-    });
-  }
-}
-
-
 Join Rejoin are alternatives for follow message connect.
 
+Refactor the code
 
-
-button = document.querySelectorAll('button.artdeco-button span.artdeco-button__text');
-button.forEach(but => {
-    console.log(but.outerText);
-});
-
-
-buttons = document.querySelectorAll('button.artdeco-button span.artdeco-button__text');
-  buttons.forEach(button => {
-      if(button.outerText == 'Connect'){
-          console.log(button.outerText);
-      }
-  });

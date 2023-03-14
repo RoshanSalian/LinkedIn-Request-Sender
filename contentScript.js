@@ -1,6 +1,10 @@
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     console.log("Content script loaded successfully.");
     console.log("Message: ", message)
+    console.log("default note: ", message.note);
+    console.log("selected: ", message.selected);
+    let note = message.note;
+    let selected = message.selected;
 
     const observer = new MutationObserver((mutationsList) => {
         let oneTime = false;
@@ -18,9 +22,20 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
     function addNoteModal(){
         // this is only to display the name
-        // const name = document.querySelector('span.flex-1');
-        // const name2 = name.querySelector('strong').textContent;
-        // console.log("Name: ", name2)
+        const divTag = document.querySelector('span.flex-1');
+        let name = divTag.querySelector('strong').textContent;
+        console.log("Name: ", name)
+
+        // works perfectly
+        updatedNote = note.replace(/\${name}/g, name);
+        console.log(updatedNote);
+
+        //reference to the 'Add a note' button
+        const button = document.querySelector('button[aria-label="Add a note"]');
+
+        if(updatedNote){
+            // to write logic for the second modal
+        }
 
         const sendButton = document.querySelector('.artdeco-modal__actionbar .artdeco-button--primary');
 
@@ -35,21 +50,29 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
         // required for logic to detect which type of modal pops-up on clicking the 'Connect' button
         const workColeagues = document.querySelector('button[aria-label="Work Colleagues"]');
-        
+        const classMate = document.querySelector('button[aria-label="Classmates"]')
+        const workRelatedEvent = document.querySelector('button[aria-label="Met at a work-related event"]')
+
+        const howYouKnow = document.querySelector('button[aria-label="Connect"]');
+
+        let firstClick = false;
+
+        // this is to check if the second type modal is loaded
+        // need to search a better way to do it
         if(workColeagues){
-            // To add UI drop-down selection option here.
-            const workEvent = document.querySelector('button[aria-label="Met at a work-related event"]');
-
-            const howYouKnow = document.querySelector('button[aria-label="Connect"]');
-
-            let firstClick = false;
-
             function firstClickHandler(){
-                workColeagues.click();
-                console.log("clicked work Coleague");
+                // workColeagues.click();
+                if(selected == "workColleague"){
+                    workColeagues.click();
+                }else if(selected == "classmaste"){
+                    classMate.click();
+                }else{
+                    workRelatedEvent.click();
+                }
+                console.log("clicked: ", selected);
                 firstClick = true;
             }
-
+    
             function secondClickHandler(){
                 if(firstClick){
                     setTimeout(()=>{
@@ -61,22 +84,23 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                     console.log("Reached else, some issue");
                 }
             }
-
+    
             firstClickHandler();
             secondClickHandler();
         }
+
+        
 
         // The add note section is visible always on clicking 'Connect', might not show for everyone Abhishek
         addNoteModal();
 
     }
 
-    // if(message.type == 'start'){
     if(message.action == 'start'){
         console.log("start")
         const connectButtons = document.querySelectorAll('button.artdeco-button span.artdeco-button__text');
         let observerCreated = false;
-        let timeDelay = 10000;
+        let timeDelay = 6000;
 
         function clickButton(){
             connectButtons.forEach(button => {
@@ -92,11 +116,15 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                 }
             });
         }
+
         clickButton();
+
+        console.log("Reached end of line control");
     }
 })
 
 // To do
-// Better function names.
-// Add a UI logic and connect to backend
+
+// Make the UI logic work.
+// Add a spinner when the code is running and should disappear on reaching end
 // Write a blog

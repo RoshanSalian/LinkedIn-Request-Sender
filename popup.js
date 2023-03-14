@@ -8,10 +8,6 @@ startButton.addEventListener("click", ()=>{
     const note = textArea.value;
     const selectedValue = selectElement.value;
 
-    // const note = "";
     console.log("from popup.js:" , note)
     chrome.runtime.sendMessage({message: "startFromPopup", note: note, selected: selectedValue});
-    // chrome.runtime.sendMessage({message: "startFromPopup"});
-})
-
-console.log("Before")
+});
